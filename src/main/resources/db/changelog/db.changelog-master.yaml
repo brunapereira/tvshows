@@ -13,3 +13,23 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
+  - changeSet:
+      id: create_watcher_table
+      author: bpereira
+      changes:
+        - createTable:
+            tableName: watcher
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: nickname
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                    unique: true

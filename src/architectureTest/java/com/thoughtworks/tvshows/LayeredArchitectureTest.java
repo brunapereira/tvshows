@@ -29,10 +29,8 @@ public class LayeredArchitectureTest {
 
     @ArchTest
     public static final ArchRule applicationLayerDoesNotAccessInfrastructureLayer =
-            classes().that().resideInAPackage(APPLICATION)
-                    .and(accessClassesThatResideInPackageButNotInOther(INFRASTRUCTURE, INFRASTRUCTURE_ADAPTER))
-                    .should().containNumberOfElements(equalTo(0))
-                    .because(THRESHOLD_MESSAGE);
+            noClasses().that().resideInAPackage(APPLICATION)
+                    .should().accessClassesThat().resideInAPackage(INFRASTRUCTURE);
 
     @ArchTest
     public static final ArchRule domainLayerDoesNotAccessInfrastructureLayer =
@@ -51,12 +49,10 @@ public class LayeredArchitectureTest {
 
     @ArchTest
     public static final ArchRule infrastructureLayerDoesNotAccessDomainLayer =
-            classes().that().resideInAPackage(INFRASTRUCTURE)
+            noClasses().that().resideInAPackage(INFRASTRUCTURE)
                     .and().resideOutsideOfPackage(INFRASTRUCTURE_ADAPTER)
                     .and().resideOutsideOfPackage(INFRASTRUCTURE_REPOSITORY)
-                    .and(accessClassesThatResideInPackage(DOMAIN))
-                    .should().containNumberOfElements(equalTo(0))
-                    .because(THRESHOLD_MESSAGE);
+                    .should().accessClassesThat().resideInAPackage(DOMAIN);
 
     @ArchTest
     public static final ArchRule infrastructureLayerRepositoryDoesNotAccessDomainLayer =

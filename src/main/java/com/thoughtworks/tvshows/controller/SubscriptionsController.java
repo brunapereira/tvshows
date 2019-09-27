@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-public class SubscriptionController {
+public class SubscriptionsController {
 
     private final TheTVDBGateway theTVDBGateway;
 
