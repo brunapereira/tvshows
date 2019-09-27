@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_subscription_table
+      author: bpereira
+      changes:
+        - createTable:
+            tableName: subscription
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false

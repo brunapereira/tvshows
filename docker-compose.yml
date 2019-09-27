@@ -5,11 +5,10 @@ services:
     container_name: tvshows-database
     restart: always
     ports:
-      - "3330:3306"
+      - "3313:3306"
     environment:
       MYSQL_DATABASE: tvshowsdb
       MYSQL_USER: user
       MYSQL_PASSWORD: tvshows123
     volumes:
       - ./database/local:/var/lib/mysql
-
