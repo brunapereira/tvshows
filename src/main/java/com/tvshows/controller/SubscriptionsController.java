@@ -16,6 +16,6 @@ public class SubscriptionsController {
     @GetMapping("/subscriptions")
     @ResponseStatus(HttpStatus.OK)
     public String getSubscriptions() {
-        return theTVDBGateway.getShows();
+        return null;
     }
 }

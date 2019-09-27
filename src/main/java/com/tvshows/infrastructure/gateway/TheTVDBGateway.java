@@ -2,8 +2,11 @@ package com.tvshows.infrastructure.gateway;
 
 import com.tvshows.infrastructure.gateway.resource.AuthenticationToken;
 import com.tvshows.infrastructure.gateway.resource.LoginRequestBody;
+import com.tvshows.infrastructure.gateway.resource.SearchResult;
 import lombok.AllArgsConstructor;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,13 +19,11 @@ public class TheTVDBGateway {
     private final RestTemplate restTemplate;
     private final TheTVDBProperties theTVDBProperties;
 
-    public String getShows() {
+    public SearchResult searchShows(String partialName) {
         String token = getToken();
         HttpEntity<String> request = new HttpEntity<>(getHttpHeaders(token));
 
-        ResponseEntity<String> exchange = restTemplate.exchange(getEndpointUrl(), HttpMethod.GET, request, String.class);
-
-        return exchange.getBody();
+        return restTemplate.exchange(getSearchSeriesUrl(partialName), HttpMethod.GET, request, SearchResult.class).getBody();
     }
 
     private String getToken() {
@@ -44,7 +45,7 @@ public class TheTVDBGateway {
         return theTVDBProperties.getUrl() + "/login";
     }
 
-    private String getEndpointUrl() {
-        return theTVDBProperties.getUrl() + "/episodes/1";
+    private String getSearchSeriesUrl(String partialName) {
+        return String.format("%s/search/series?name=%s", theTVDBProperties.getUrl(), partialName);
     }
 }

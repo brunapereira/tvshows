@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties("thedvdb.service")
 public class TheTVDBProperties {
-
     private String username;
     private String userkey;
     private String apikey;
