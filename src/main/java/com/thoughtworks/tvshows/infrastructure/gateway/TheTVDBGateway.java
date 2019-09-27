@@ -2,6 +2,7 @@ package com.thoughtworks.tvshows.infrastructure.gateway;
 
 import com.thoughtworks.tvshows.infrastructure.gateway.resource.AuthenticationToken;
 import com.thoughtworks.tvshows.infrastructure.gateway.resource.LoginRequestBody;
+import lombok.AllArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -9,15 +10,11 @@ import org.springframework.web.client.RestTemplate;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 
 @Component
+@AllArgsConstructor
 public class TheTVDBGateway {
 
     private final RestTemplate restTemplate;
     private final TheTVDBProperties theTVDBProperties;
-
-    public TheTVDBGateway(TheTVDBProperties theTVDBProperties) {
-        this.restTemplate = new RestTemplate();
-        this.theTVDBProperties = theTVDBProperties;
-    }
 
     public String getShows() {
         String token = getToken();

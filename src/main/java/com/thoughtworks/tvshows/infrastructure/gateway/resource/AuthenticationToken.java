@@ -1,14 +1,12 @@
 package com.thoughtworks.tvshows.infrastructure.gateway.resource;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuthenticationToken {
     private String token;
-
-    public AuthenticationToken(String token) {
-        this.token = token;
-    }
-
-    public AuthenticationToken() {
-    }
 
     public String getToken() {
         return token;

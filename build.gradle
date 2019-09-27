@@ -7,7 +7,7 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'com.thoughtworks'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
@@ -19,6 +19,8 @@ dependencies {
 	implementation 'org.liquibase:liquibase-core'
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	annotationProcessor 'org.projectlombok:lombok:1.18.10'
+	compileOnly 'org.projectlombok:lombok:1.18.10'
 
 	testCompile 'org.assertj:assertj-core:3.4.1'
 }
