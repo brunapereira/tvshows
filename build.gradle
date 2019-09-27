@@ -1,6 +1,6 @@
 plugins {
-	id 'org.springframework.boot' version '2.1.4.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'java'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -11,26 +11,96 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 repositories {
-	mavenCentral()
-}
-
-checkstyle {
-	toolVersion "8.15"
-	configFile file("${project.rootDir}/rules-checkstyle.xml")
-}
-
-task("checkstyle") {
-	dependsOn checkstyleMain, checkstyleTest
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.liquibase:liquibase-core'
-	runtimeOnly 'mysql:mysql-connector-java'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	annotationProcessor 'org.projectlombok:lombok:1.18.10'
-	compileOnly 'org.projectlombok:lombok:1.18.10'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.liquibase:liquibase-core'
+    runtimeOnly 'mysql:mysql-connector-java'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    compileOnly 'org.projectlombok:lombok:1.18.10'
 
-	testCompile 'org.assertj:assertj-core:3.4.1'
+    testCompile 'org.assertj:assertj-core:3.4.1'
+    testCompile 'com.jayway.restassured:rest-assured:2.9.0'
+    testCompile 'io.rest-assured:rest-assured:3.3.0'
+    testCompile 'io.rest-assured:spring-mock-mvc:3.3.0'
+    testCompile 'com.github.tomakehurst:wiremock:2.24.1'
+    testCompile 'com.tngtech.archunit:archunit-junit4:0.11.0'
 }
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+    integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
+    componentTestImplementation.extendsFrom testImplementation
+    componentTestRuntimeOnly.extendsFrom testRuntimeOnly
+    componentTestAnnotationProcessor.extendsFrom testAnnotationProcessor
+    architectureTestImplementation.extendsFrom testImplementation
+    architectureTestRuntimeOnly.extendsFrom testRuntimeOnly
+    architectureTestAnnotationProcessor.extendsFrom testAnnotationProcessor
+}
+
+sourceSets {
+    integrationTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+    componentTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+    architectureTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+}
+
+checkstyle {
+    toolVersion "8.15"
+    configFile file("${project.rootDir}/rules-checkstyle.xml")
+}
+
+task integrationTest(type: Test) {
+    group = "verification"
+    description = "Runs the integrations tests."
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+}
+
+task componentTest(type: Test) {
+    group = "verification"
+    description = "Runs the componenet tests."
+    testClassesDirs = sourceSets.componentTest.output.classesDirs
+    classpath = sourceSets.componentTest.runtimeClasspath
+    shouldRunAfter integrationTest
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+}
+
+task architectureTest(type: Test) {
+    group = "verification"
+    description = "Runs the architecture tests."
+    testClassesDirs = sourceSets.architectureTest.output.classesDirs
+    classpath = sourceSets.architectureTest.runtimeClasspath
+    shouldRunAfter componentTest
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+}
+
+task("checkstyle") {
+    dependsOn checkstyleMain, checkstyleTest, checkstyleIntegrationTest, checkstyleComponentTest, checkstyleArchitectureTest
+}
+
+check.dependsOn integrationTest, componentTest, architectureTest
