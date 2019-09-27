@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class TvshowsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TvshowsApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(TvshowsApplication.class, args);
+    }
 }

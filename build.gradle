@@ -4,6 +4,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'checkstyle'
 
 group = 'com.thoughtworks'
 version = '0.0.1-SNAPSHOT'
@@ -11,6 +12,15 @@ sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
+}
+
+checkstyle {
+	toolVersion "8.15"
+	configFile file("${project.rootDir}/rules-checkstyle.xml")
+}
+
+task("checkstyle") {
+	dependsOn checkstyleMain, checkstyleTest
 }
 
 dependencies {
