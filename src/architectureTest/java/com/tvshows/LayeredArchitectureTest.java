@@ -16,11 +16,11 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 @RunWith(ArchUnitRunner.class)
-@AnalyzeClasses(packages = "com.dcec.peopleevaluations", importOptions = ImportOption.DoNotIncludeTests.class)
+@AnalyzeClasses(packages = "com.tvshows", importOptions = ImportOption.DoNotIncludeTests.class)
 public class LayeredArchitectureTest {
     private static final String CONTROLLER = "..controller..";
     private static final String APPLICATION = "..application..";
-    private static final String DOMAIN = "..peopleevaluations.domain..";
+    private static final String DOMAIN = "..tvshows.domain..";
     private static final String INFRASTRUCTURE = "..infrastructure..";
     private static final String INFRASTRUCTURE_ADAPTER = "..infrastructure.adapter..";
     private static final String INFRASTRUCTURE_REPOSITORY = "..infrastructure.repository..";
