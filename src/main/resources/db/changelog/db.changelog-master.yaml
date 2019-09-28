@@ -33,3 +33,29 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     unique: true
+  - changeSet:
+      id: add_informations_to_subscription
+      author: bpereira
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: watcher_id
+                  type: int
+              - column:
+                  name: series_id
+                  type: int
+              - column:
+                  name: season
+                  type: int
+              - column:
+                  name: episode
+                  type: int
+            tableName: subscription
+        - addForeignKeyConstraint:
+            baseTableName: subscription
+            baseColumnNames: watcher_id
+            constraintName: fk_subscription_watcher_id
+            referencedColumnNames: id
+            referencedTableName: watcher
+            onDelete: cascade

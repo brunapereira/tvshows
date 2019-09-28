@@ -7,7 +7,6 @@ import lombok.Getter;
 @EqualsAndHashCode
 @AllArgsConstructor
 public class Nickname {
-    @Getter
     private String nickname;
 
     @Override

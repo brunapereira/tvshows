@@ -1,4 +1,4 @@
-package com.tvshows.infrastructure.adapter;
+package com.tvshows.infrastructure.adapter.watcher;
 
 import com.tvshows.domain.watcher.Nickname;
 import com.tvshows.infrastructure.jpa.watcher.WatcherEntity;

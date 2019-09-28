@@ -1,7 +1,7 @@
 package com.tvshows.application.watcher;
 
 import com.tvshows.domain.watcher.Nickname;
-import com.tvshows.infrastructure.adapter.WatcherAdapter;
+import com.tvshows.infrastructure.adapter.watcher.WatcherAdapter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
