@@ -2,7 +2,6 @@ package com.tvshows.domain.watcher;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 @EqualsAndHashCode
 @AllArgsConstructor

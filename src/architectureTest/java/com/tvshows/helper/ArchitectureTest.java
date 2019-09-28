@@ -5,7 +5,6 @@ import com.tngtech.archunit.core.domain.Dependency;
 import com.tngtech.archunit.core.domain.JavaClass;
 
 public class ArchitectureTest {
-    public static final String THRESHOLD_MESSAGE = "if there are fewer elements, change the threshold";
 
     public static DescribedPredicate<JavaClass> accessClassesButEnumsThatResideInPackage(final String aPackage) {
         return new DescribedPredicate<>("access classes that reside in package " + aPackage) {

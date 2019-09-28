@@ -23,7 +23,8 @@ public class LayeredArchitectureTest {
     private static final String DOMAIN = "..tvshows.domain..";
     private static final String INFRASTRUCTURE = "..infrastructure..";
     private static final String INFRASTRUCTURE_ADAPTER = "..infrastructure.adapter..";
-    private static final String INFRASTRUCTURE_REPOSITORY = "..infrastructure.repository..";
+    private static final String INFRASTRUCTURE_REPOSITORY = "..infrastructure.jpa..";
+    private static final String INFRASTRUCTURE_GATEWAY = "..infrastructure.gateway..";
 
     @ArchTest
     public static final ArchRule viewLayerDoesNotAccessInfrastructureLayer =
@@ -35,13 +36,15 @@ public class LayeredArchitectureTest {
     public static final ArchRule applicationLayerDoesNotAccessInfrastructureLayer =
             noClasses().that().resideInAPackage(APPLICATION)
                     .and(resideOutsideProxyPackages())
-                    .should().accessClassesThat().resideInAPackage(INFRASTRUCTURE);
+                    .should().accessClassesThat().resideInAPackage(INFRASTRUCTURE_REPOSITORY)
+                    .andShould().accessClassesThat().resideInAPackage(INFRASTRUCTURE_GATEWAY);
 
     @ArchTest
     public static final ArchRule domainLayerDoesNotAccessInfrastructureLayer =
             noClasses().that().resideInAPackage(DOMAIN)
                     .and(resideOutsideProxyPackages())
-                    .should().accessClassesThat().resideInAPackage(INFRASTRUCTURE);
+                    .should().accessClassesThat().resideInAPackage(INFRASTRUCTURE)
+                    .andShould().accessClassesThat().resideInAPackage(INFRASTRUCTURE_GATEWAY);
 
     @ArchTest
     public static final ArchRule infrastructureLayerDoesNotAccessViewLayer =
@@ -66,10 +69,8 @@ public class LayeredArchitectureTest {
     @ArchTest
     public static final ArchRule infrastructureLayerRepositoryDoesNotAccessDomainLayer =
             classes().that().resideInAPackage(INFRASTRUCTURE_REPOSITORY)
-                    .and(resideOutsideProxyPackages())
                     .and(accessClassesButEnumsThatResideInPackage(DOMAIN))
-                    .should().containNumberOfElements(equalTo(0))
-                    .because(THRESHOLD_MESSAGE);
+                    .should().containNumberOfElements(equalTo(0));
 
     private static DescribedPredicate<JavaClass> resideOutsideProxyPackages() {
         return resideOutsideOfPackages("..search..");
