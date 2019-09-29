@@ -14,7 +14,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 @RunWith(ArchUnitRunner.class)
-@AnalyzeClasses(packages = "com.thoughtworks.tvshows", importOptions = ImportOption.DoNotIncludeTests.class)
+@AnalyzeClasses(packages = "com.tvshows", importOptions = ImportOption.DoNotIncludeTests.class)
 public class ClassesTest {
     @ArchTest
     public static final ArchRule controllersMustResideInViewPackage =
