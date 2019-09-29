@@ -16,6 +16,8 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 @RunWith(ArchUnitRunner.class)
 @AnalyzeClasses(packages = "com.tvshows", importOptions = ImportOption.DoNotIncludeTests.class)
 public class ClassesTest {
+    private static final String ADAPTER_PACKAGE = "..infrastructure.adapter..";
+
     @ArchTest
     public static final ArchRule controllersMustResideInViewPackage =
             classes().that().haveSimpleNameEndingWith("Controller")
@@ -29,11 +31,11 @@ public class ClassesTest {
     @ArchTest
     public static final ArchRule adaptersMustResideInAdapterPackage =
             classes().that().haveSimpleNameEndingWith("Adapter")
-                    .should().resideInAPackage("..infrastructure.adapter..");
+                    .should().resideInAPackage(ADAPTER_PACKAGE);
 
     @ArchTest
     public static final ArchRule convertersMustNotDependOfRepositoriesOrGateways =
-            noClasses().that().resideInAPackage("..infrastructure.adapter..").and().haveSimpleNameEndingWith("Converter")
+            noClasses().that().resideInAPackage(ADAPTER_PACKAGE).and().haveSimpleNameEndingWith("Converter")
                     .should().dependOnClassesThat().haveSimpleNameEndingWith("Gateway")
                     .orShould().dependOnClassesThat().areAssignableTo(JpaRepository.class);
 
@@ -45,16 +47,16 @@ public class ClassesTest {
     @ArchTest
     public static final ArchRule entitiesMustResideInARepositoryPackage =
             classes().that().areAnnotatedWith(Entity.class)
-                    .should().resideInAPackage("..infrastructure.repository.jpa..");
+                    .should().resideInAPackage("..infrastructure.jpa..");
 
     @ArchTest
     public static final ArchRule repositoriesMustResideInARepositoryPackage =
             classes().that().areAssignableTo(JpaRepository.class)
-                    .should().resideInAPackage("..infrastructure.repository.jpa..");
+                    .should().resideInAPackage("..infrastructure.jpa..");
 
     @ArchTest
     public static final ArchRule convertersMustResideInAConverterPackage =
-            classes().that().resideInAPackage("..infrastructure.adapter..")
+            classes().that().resideInAPackage(ADAPTER_PACKAGE)
                     .and().haveSimpleNameEndingWith("Converter")
                     .should().resideInAPackage("..converter..");
 
