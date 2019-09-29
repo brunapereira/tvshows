@@ -1,4 +1,4 @@
-package com.tvshows.search;
+package com.tvshows.controller.search;
 
 import com.tvshows.infrastructure.gateway.TheTVDBGateway;
 import com.tvshows.infrastructure.gateway.resource.SearchResult;
